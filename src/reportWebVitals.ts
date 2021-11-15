@@ -13,5 +13,5 @@ const reportWebVitals = (onPerfEntry?: ReportHandler): void => {
   }
 };
 
-export default reportWebVitals;
+export { reportWebVitals };
 /* eslint-enable @typescript-eslint/no-floating-promises */
