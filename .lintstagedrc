@@ -5,6 +5,7 @@
   "*.{ts,tsx}": [
     "prettier --write",
     "npm run lint:fix",
+    "npm run lint:css",
     "tsc-files --noEmit",
     "npm run test:related"
   ]
