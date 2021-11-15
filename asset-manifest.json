@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/todo-app-ts-styled-components-graphql/static/css/main.c86e2893.chunk.css",
+    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.15f2b346.chunk.js",
+    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.15f2b346.chunk.js.map",
+    "runtime-main.js": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.887cf430.js",
+    "runtime-main.js.map": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.887cf430.js.map",
+    "static/js/2.6ff6d20a.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/2.6ff6d20a.chunk.js",
+    "static/js/2.6ff6d20a.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/2.6ff6d20a.chunk.js.map",
+    "static/js/3.0326ad23.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/3.0326ad23.chunk.js",
+    "static/js/3.0326ad23.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/3.0326ad23.chunk.js.map",
+    "index.html": "/todo-app-ts-styled-components-graphql/index.html",
+    "static/css/main.c86e2893.chunk.css.map": "/todo-app-ts-styled-components-graphql/static/css/main.c86e2893.chunk.css.map",
+    "static/js/2.6ff6d20a.chunk.js.LICENSE.txt": "/todo-app-ts-styled-components-graphql/static/js/2.6ff6d20a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.887cf430.js",
+    "static/js/2.6ff6d20a.chunk.js",
+    "static/css/main.c86e2893.chunk.css",
+    "static/js/main.15f2b346.chunk.js"
+  ]
+}
