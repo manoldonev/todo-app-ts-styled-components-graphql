@@ -1,5 +1,6 @@
 {
   "name": "todo-app-ts-styled-components-graphql",
+  "homepage": "https://manoldonev.github.io/todo-app-ts-styled-components-graphql",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,6 +11,14 @@
     "@types/node": "^12.20.37",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint-config-airbnb": "^19.0.0",
+    "eslint-config-airbnb-typescript": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -20,13 +29,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "test:related": "npm run test -- --bail --watchAll=false --findRelatedTests src/**/*.{ts,tsx} --passWithNoTests",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.{ts,tsx} --quiet",
+    "lint:fix": "eslint --fix --ext src/**/*.{ts,tsx}",
+    "prettier": "prettier --check src"
   },
   "browserslist": {
     "production": [
