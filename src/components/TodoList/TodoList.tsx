@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { TodoItem } from './TodoItem/TodoItem';
 import { useTodos } from './useTodos';
 import { Spinner } from './Spinner';
+import { Header } from './Header';
 
 const Section = styled.section`
   background-color: #fff;
@@ -23,6 +24,7 @@ const TodoList = (): JSX.Element => {
 
   return (
     <Section>
+      <Header />
       {isFetching && (
         <p>
           <Spinner /> Loading your list...
