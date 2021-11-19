@@ -11,12 +11,20 @@ interface TodoState {
   currentPage: number;
   pageSize: number;
   hasMore: boolean;
+  filterMode: FilterMode;
 }
 
 const enum ActionType {
   TogglePage,
   ToggleFilter,
 }
+
+enum FilterMode {
+  All = 'all',
+  Active = 'active',
+  Done = 'done',
+}
+
 interface Action {
   type: ActionType;
   numericPayload?: number;
@@ -39,6 +47,17 @@ function todoReducer(state: TodoState, action: Action): TodoState {
         draft.currentPage = action.numericPayload;
       });
     }
+    case ActionType.ToggleFilter: {
+      return produce(state, (draft) => {
+        const filterKey = action.stringPayload;
+        if (filterKey == null || !(filterKey in FilterMode)) {
+          throw new Error(`${action.type}: filter ${filterKey} not found`);
+        }
+
+        draft.filterMode = FilterMode[filterKey as keyof typeof FilterMode];
+        draft.currentPage = 1;
+      });
+    }
     default: {
       throw new Error(`Unhandled action type`);
     }
@@ -56,6 +75,7 @@ const TodoProvider = ({
     currentPage: 1,
     pageSize: 5,
     hasMore: false,
+    filterMode: FilterMode.All,
   });
 
   return (
@@ -87,6 +107,13 @@ function useTodoDispatch(): React.Dispatch<Action> {
   return context;
 }
 
-export { TodoProvider, useTodoState, useTodoDispatch, todoReducer, ActionType };
+export {
+  TodoProvider,
+  useTodoState,
+  useTodoDispatch,
+  todoReducer,
+  ActionType,
+  FilterMode,
+};
 
 export type { DataItem, Action };

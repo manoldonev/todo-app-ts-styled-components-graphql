@@ -3,6 +3,7 @@ import { TodoItem } from './TodoItem/TodoItem';
 import { useTodos } from './useTodos';
 import { Spinner } from './Spinner';
 import { Header } from './Header';
+import { Footer } from './Footer';
 
 const Section = styled.section`
   background-color: #fff;
@@ -35,6 +36,7 @@ const TodoList = (): JSX.Element => {
           (todo) => todo && <TodoItem key={todo.id} data={todo} />,
         )}
       </StyledList>
+      <Footer />
     </Section>
   );
 };
