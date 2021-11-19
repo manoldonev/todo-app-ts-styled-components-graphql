@@ -4,6 +4,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
+    "@graphql-codegen/cli": "2.2.2",
+    "@graphql-codegen/introspection": "2.1.0",
+    "@graphql-codegen/typescript": "2.3.1",
+    "@graphql-codegen/typescript-operations": "2.2.0",
+    "@graphql-codegen/typescript-react-query": "^3.1.1",
     "@stylelint/postcss-css-in-js": "^0.37.2",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
@@ -21,11 +29,15 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-prettier": "^4.0.0",
     "gh-pages": "^3.2.3",
+    "graphql": "^15.7.2",
     "husky": "^7.0.4",
+    "immer": "^9.0.6",
     "lint-staged": "^12.0.2",
     "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hot-toast": "^2.1.1",
+    "react-query": "^3.32.3",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.3",
     "stylelint": "^14.1.0",
@@ -48,7 +60,8 @@
     "lint": "eslint src/**/*.{ts,tsx} --quiet",
     "lint:fix": "eslint --fix --ext src/**/*.{ts,tsx}",
     "lint:css": "stylelint src/**/*.tsx",
-    "prettier": "prettier --check src"
+    "prettier": "prettier --check src",
+    "graphql:codegen": "graphql-codegen --config .graphqlrc.yml"
   },
   "browserslist": {
     "production": [

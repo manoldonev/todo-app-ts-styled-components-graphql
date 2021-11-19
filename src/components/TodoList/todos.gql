@@ -1,0 +1,7 @@
+query Todos($page: Int, $limit: Int, $input: TodosWhere) {
+  todos(page: $page, limit: $limit, where: $input) {
+    id
+    task
+    done
+  }
+}
