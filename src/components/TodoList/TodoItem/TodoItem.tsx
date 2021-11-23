@@ -1,7 +1,13 @@
 import styled from 'styled-components/macro';
 import { useQueryClient } from 'react-query';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import type { DataItem } from '../../../context/todo';
-import { useUpdateTodoMutation } from '../../../generated';
+import {
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} from '../../../generated';
+import { ImageButton } from '../../common/ImageButton';
 
 const ListItem = styled.li<{ done: boolean }>`
   background-color: #fff;
@@ -21,6 +27,7 @@ const ListItem = styled.li<{ done: boolean }>`
 `;
 
 const Wrapper = styled.div`
+  display: flex;
   margin: 1rem 0;
   min-height: 2rem;
 `;
@@ -32,21 +39,32 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
   const { id, task, done } = data;
   const queryClient = useQueryClient();
-  const { mutate } = useUpdateTodoMutation<Error>({
+  const { mutate: updateTodo } = useUpdateTodoMutation({
+    onSuccess: async () => queryClient.invalidateQueries('Todos'),
+  });
+
+  const { mutate: deleteTodo } = useDeleteTodoMutation({
     onSuccess: async () => queryClient.invalidateQueries('Todos'),
   });
 
   const handleChange = (): void => {
-    mutate({ id, input: { done: !done } });
+    updateTodo({ id, input: { done: !done } });
+  };
+
+  const handleClick = (): void => {
+    deleteTodo({ id });
   };
 
   return (
     <ListItem done={done}>
       <Wrapper>
-        <label htmlFor={id}>
+        <label style={{ marginRight: 'auto' }} htmlFor={id}>
           <Checkbox id={id} checked={done} onChange={handleChange} />
           {task}
         </label>
+        <ImageButton onClick={handleClick} aria-label="Delete Item">
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </ImageButton>
       </Wrapper>
     </ListItem>
   );

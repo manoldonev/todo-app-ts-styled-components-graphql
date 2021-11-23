@@ -355,6 +355,13 @@ export type CreateTodoMutationVariables = Exact<{
 
 export type CreateTodoMutation = { __typename?: 'Mutation', createTodo: { __typename?: 'Todo', id: string, task: string, done: boolean } };
 
+export type DeleteTodoMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: string };
+
 export type UpdateTodoMutationVariables = Exact<{
   id: Scalars['ID'];
   input: UpdateTodoInput;
@@ -391,6 +398,20 @@ export const useCreateTodoMutation = <
     useMutation<CreateTodoMutation, TError, CreateTodoMutationVariables, TContext>(
       'createTodo',
       (variables?: CreateTodoMutationVariables) => fetcher<CreateTodoMutation, CreateTodoMutationVariables>(CreateTodoDocument, variables)(),
+      options
+    );
+export const DeleteTodoDocument = `
+    mutation deleteTodo($id: ID!) {
+  deleteTodo(id: $id)
+}
+    `;
+export const useDeleteTodoMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteTodoMutation, TError, DeleteTodoMutationVariables, TContext>) =>
+    useMutation<DeleteTodoMutation, TError, DeleteTodoMutationVariables, TContext>(
+      'deleteTodo',
+      (variables?: DeleteTodoMutationVariables) => fetcher<DeleteTodoMutation, DeleteTodoMutationVariables>(DeleteTodoDocument, variables)(),
       options
     );
 export const UpdateTodoDocument = `
