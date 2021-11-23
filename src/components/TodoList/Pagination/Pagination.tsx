@@ -33,6 +33,7 @@ const Pagination = (): JSX.Element => {
       <PaginationList>
         <PaginationItem>
           <ImageButton
+            aria-label="Previous Page"
             onClick={() =>
               dispatch({
                 type: ActionType.TogglePage,
@@ -46,6 +47,7 @@ const Pagination = (): JSX.Element => {
         </PaginationItem>
         <PaginationItem>
           <ImageButton
+            aria-label="Next Page"
             onClick={() =>
               dispatch({
                 type: ActionType.TogglePage,
