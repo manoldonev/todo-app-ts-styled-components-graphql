@@ -1,6 +1,8 @@
+![build workflow](https://github.com/manoldonev/todo-app-ts-styled-components-graphql/actions/workflows/main.yml/badge.svg)
+
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and represents a simple TypeScript todo web app implemented with React, Styled Components, and GraphQL.
 
 ## Available Scripts
 
