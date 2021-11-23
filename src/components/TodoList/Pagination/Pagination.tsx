@@ -10,6 +10,7 @@ import {
   useTodoState,
 } from '../../../context/todo';
 import { useTodos } from '../useTodos';
+import { ImageButton } from '../../common/ImageButton';
 
 const PaginationList = styled.ul`
   margin-right: auto;
@@ -19,19 +20,6 @@ const PaginationList = styled.ul`
 
 const PaginationItem = styled.li`
   display: inline;
-`;
-
-const Button = styled.button.attrs({ type: 'button' })`
-  background-color: transparent;
-  border: 0;
-  font-size: calc(max(2rem, 20px));
-  cursor: pointer;
-  transition: 0.3s all;
-  opacity: 0.4;
-
-  &:hover:enabled {
-    opacity: 1;
-  }
 `;
 
 const Pagination = (): JSX.Element => {
@@ -44,7 +32,7 @@ const Pagination = (): JSX.Element => {
       Current page: {page}
       <PaginationList>
         <PaginationItem>
-          <Button
+          <ImageButton
             onClick={() =>
               dispatch({
                 type: ActionType.TogglePage,
@@ -54,10 +42,10 @@ const Pagination = (): JSX.Element => {
             disabled={page === 1}
           >
             <FontAwesomeIcon icon={faChevronLeft} fixedWidth />
-          </Button>
+          </ImageButton>
         </PaginationItem>
         <PaginationItem>
-          <Button
+          <ImageButton
             onClick={() =>
               dispatch({
                 type: ActionType.TogglePage,
@@ -67,7 +55,7 @@ const Pagination = (): JSX.Element => {
             disabled={isPreviousData || !hasMoreData}
           >
             <FontAwesomeIcon icon={faChevronRight} fixedWidth />
-          </Button>
+          </ImageButton>
         </PaginationItem>
       </PaginationList>
     </>

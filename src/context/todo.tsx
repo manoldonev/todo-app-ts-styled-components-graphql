@@ -12,17 +12,27 @@ interface TodoState {
   pageSize: number;
   hasMore: boolean;
   filterMode: FilterMode;
+  inputMode: InputMode;
+  query: string;
 }
 
 const enum ActionType {
   TogglePage,
   ToggleFilter,
+  ToggleMode,
+  SearchItem,
 }
 
 enum FilterMode {
   All = 'all',
   Active = 'active',
   Done = 'done',
+}
+
+enum InputMode {
+  Add,
+  Search,
+  None,
 }
 
 interface Action {
@@ -58,6 +68,20 @@ function todoReducer(state: TodoState, action: Action): TodoState {
         draft.currentPage = 1;
       });
     }
+    case ActionType.ToggleMode: {
+      return produce(state, (draft) => {
+        const inputMode = action.numericPayload;
+        if (inputMode == null || !(inputMode in InputMode)) {
+          throw new Error(`${action.type}: input mode ${inputMode} not found`);
+        }
+
+        if (draft.inputMode !== inputMode) {
+          draft.inputMode = inputMode;
+          draft.filterMode = FilterMode.All;
+          draft.currentPage = 1;
+        }
+      });
+    }
     default: {
       throw new Error(`Unhandled action type`);
     }
@@ -76,6 +100,8 @@ const TodoProvider = ({
     pageSize: 5,
     hasMore: false,
     filterMode: FilterMode.All,
+    inputMode: InputMode.Add,
+    query: '',
   });
 
   return (
@@ -114,6 +140,7 @@ export {
   todoReducer,
   ActionType,
   FilterMode,
+  InputMode,
 };
 
 export type { DataItem, Action };

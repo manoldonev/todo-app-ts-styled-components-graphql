@@ -1,6 +1,14 @@
 import styled from 'styled-components/macro';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { MouseEvent } from 'react';
+import { ImageButton } from '../../common/ImageButton';
+import {
+  ActionType,
+  InputMode,
+  useTodoDispatch,
+  useTodoState,
+} from '../../../context/todo';
 
 const ActionList = styled.ul`
   flex: 0 0 auto;
@@ -14,33 +22,44 @@ const ActionItem = styled.li`
   display: inline;
 `;
 
-const Button = styled.button.attrs({ type: 'button' })<{ active?: boolean }>`
-  background-color: transparent;
-  border: 0;
+const ActionButton = styled(ImageButton)<{ active: boolean }>`
   margin: 0 0.8rem 0 0;
-  font-size: calc(max(2rem, 20px));
-  cursor: pointer;
-  transition: 0.3s all;
-  opacity: 0.4;
-  ${(props) => props.active != null && props.active && `opacity: 1;`}
 
-  &:hover {
-    opacity: 1;
-  }
+  ${(props) => props.active && `opacity: 1;`}
 `;
 
 const Actions = (): JSX.Element => {
+  const { inputMode: mode } = useTodoState();
+  const dispatch = useTodoDispatch();
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
+    dispatch({
+      type: ActionType.ToggleMode,
+      numericPayload: parseInt(e.currentTarget.value, 10),
+    });
+  };
+
   return (
     <ActionList>
       <ActionItem>
-        <Button>
+        <ActionButton
+          active={mode === InputMode.Add}
+          value={InputMode.Add}
+          aria-label="Create Mode"
+          onClick={handleClick}
+        >
           <FontAwesomeIcon icon={faPlus} fixedWidth />
-        </Button>
+        </ActionButton>
       </ActionItem>
       <ActionItem>
-        <Button>
+        <ActionButton
+          active={mode === InputMode.Search}
+          value={InputMode.Search}
+          aria-label="Search Mode"
+          onClick={handleClick}
+        >
           <FontAwesomeIcon icon={faSearch} fixedWidth />
-        </Button>
+        </ActionButton>
       </ActionItem>
     </ActionList>
   );

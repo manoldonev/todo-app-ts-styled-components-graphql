@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 import { TodoItem } from './TodoItem/TodoItem';
 import { useTodos } from './useTodos';
-import { Spinner } from './Spinner';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { InputToggle } from './InputToggle';
 
 const Section = styled.section`
   background-color: #fff;
@@ -13,6 +13,7 @@ const Section = styled.section`
   margin: 3rem auto;
   min-width: 32rem;
   max-width: 60rem;
+  position: relative;
 `;
 
 const StyledList = styled.ul`
@@ -21,22 +22,24 @@ const StyledList = styled.ul`
 `;
 
 const TodoList = (): JSX.Element => {
-  const { data, isFetching } = useTodos();
+  const { data } = useTodos();
 
   return (
     <Section>
       <Header />
-      {isFetching && (
-        <p>
-          <Spinner /> Loading your list...
-        </p>
-      )}
+      <InputToggle />
+
       <StyledList>
         {data?.todos?.map(
           (todo) => todo && <TodoItem key={todo.id} data={todo} />,
         )}
       </StyledList>
       <Footer />
+      {/* {isFetching && (
+        <p style={{ position: 'absolute', left: 10, bottom: 10 }}>
+          <Spinner /> Loading...
+        </p>
+      )} */}
     </Section>
   );
 };

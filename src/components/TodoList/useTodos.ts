@@ -2,6 +2,11 @@ import { FilterMode, useTodoState } from '../../context/todo';
 import type { TodosQuery } from '../../generated';
 import { useTodosQuery } from '../../generated';
 
+const enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
+
 const useTodos = (): {
   data: TodosQuery | undefined;
   isFetching: boolean;
@@ -16,15 +21,22 @@ const useTodos = (): {
     input = { done_eq: true };
   }
 
-  const { data, isFetching, isPreviousData } = useTodosQuery(
-    { page: currentPage, limit: pageSize, input },
-    { keepPreviousData: true, staleTime: 5000 },
-  );
-
-  const { data: nextData } = useTodosQuery({
-    page: currentPage + 1,
+  const queryVariables = {
+    page: currentPage,
     limit: pageSize,
     input,
+    sort: 'id',
+    direction: SortDirection.Descending,
+  };
+
+  const { data, isFetching, isPreviousData } = useTodosQuery(queryVariables, {
+    keepPreviousData: true,
+    staleTime: 5000,
+  });
+
+  const { data: nextData } = useTodosQuery({
+    ...queryVariables,
+    page: currentPage + 1,
   });
 
   return {
