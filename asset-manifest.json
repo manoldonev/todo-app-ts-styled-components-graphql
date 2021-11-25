@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/todo-app-ts-styled-components-graphql/static/css/main.ec83d2c2.chunk.css",
-    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.b0d40f01.chunk.js",
-    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.b0d40f01.chunk.js.map",
+    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.03dc4cdd.chunk.js",
+    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.03dc4cdd.chunk.js.map",
     "runtime-main.js": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.f9d740fd.js",
     "runtime-main.js.map": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.f9d740fd.js.map",
     "static/js/2.53107f61.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/2.53107f61.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.f9d740fd.js",
     "static/js/2.53107f61.chunk.js",
     "static/css/main.ec83d2c2.chunk.css",
-    "static/js/main.b0d40f01.chunk.js"
+    "static/js/main.03dc4cdd.chunk.js"
   ]
 }
