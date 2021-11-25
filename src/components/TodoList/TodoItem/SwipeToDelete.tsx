@@ -1,171 +1,114 @@
-import type {
-  MouseEvent as GenericMouseEvent,
-  TouchEvent as GenericTouchEvent,
-} from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components/macro';
+import type { SwipeCallback, TapCallback } from 'react-swipeable';
+import { LEFT, useSwipeable } from 'react-swipeable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Wrapper = styled.div<{ maxHeight?: string }>`
+const Wrapper = styled.div`
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-height: ${(props) => props.maxHeight ?? 'none'};
 `;
 
-const BackgroundLayer = styled.div<{ opacity?: number }>`
+const BackgroundLayer = styled.div`
   position: absolute;
+  z-index: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 16px;
+  padding: 0 1.5rem;
   color: white;
-  background-color: #663bb7;
-
-  opacity: ${(props) => props.opacity ?? 0};
+  background-color: #c70000;
 `;
 
-const ForegroundLayer = styled.div<{ transform: string; transition: string }>`
-  width: 100%;
-  align-items: center;
-  background-color: #fff;
-  height: 100%;
-  display: flex;
+const ForegroundLayer = styled.div`
   position: relative;
   z-index: 1;
-  transform: ${(props) => props.transform};
-  transition: ${(props) => props.transition};
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
 `;
 
 const SwipeToDelete = ({
   children,
   threshold = 0.3,
-  onSwipe,
+  onSwiped,
+  onTap,
 }: {
   children: React.ReactNode;
   threshold?: number;
-  onSwipe?: () => void;
+  onSwiped?: SwipeCallback;
+  onTap?: TapCallback;
 }): JSX.Element | null => {
-  const [maxHeight, setMaxHeight] = useState('');
-  const [opacity, setBackgroundOpacity] = useState(0);
-  const [transform, setForegroundTransform] = useState('');
-  const [transition, setForegroundTransition] = useState('');
-  const foregroundRef = useRef<HTMLDivElement>(null);
+  const foregroundRef = useRef<HTMLDivElement | null>(null);
+  const backgroundRef = useRef<HTMLDivElement | null>(null);
 
-  const dragStartXRef = useRef<number>(0);
-  const leftRef = useRef<number>(0);
-  const draggedRef = useRef<boolean>(false);
+  const swipeableHandlers = useSwipeable({
+    trackMouse: true,
+    preventDefaultTouchmoveEvent: true,
+    onTap,
+    onSwipeStart: () => {
+      if (foregroundRef.current) {
+        foregroundRef.current.style.transition = '';
+        foregroundRef.current.style.transform = '';
+      }
+    },
+    onSwiping: (eventData) => {
+      if (foregroundRef.current) {
+        const transform = `translateX(${eventData.deltaX}px)`;
+        foregroundRef.current.style.transform = transform;
+      }
 
-  const updatePosition = (): void => {
-    if (draggedRef.current) {
-      requestAnimationFrame(updatePosition);
-    }
+      if (backgroundRef.current) {
+        const opacity = Math.min(Math.abs(eventData.deltaX) / 100, 1);
+        backgroundRef.current.style.opacity = opacity.toFixed(2);
+      }
+    },
+    onSwiped: (eventData) => {
+      if (!foregroundRef.current) {
+        return;
+      }
 
-    setForegroundTransform(`translateX(${leftRef.current}px)`);
-    setBackgroundOpacity(
-      Math.min(+(Math.abs(leftRef.current) / 100).toFixed(2), 1),
-    );
+      let left = eventData.deltaX;
+      const { offsetWidth } = foregroundRef.current;
+      if (Math.abs(left) >= offsetWidth * threshold) {
+        left = eventData.dir === LEFT ? -offsetWidth * 2 : offsetWidth;
+
+        if (onSwiped) {
+          onSwiped(eventData);
+        }
+      } else {
+        left = 0;
+      }
+
+      foregroundRef.current.style.transition = 'transform 0.5s ease-out';
+      foregroundRef.current.style.transform = `translateX(${left}px)`;
+    },
+  });
+
+  const refPassthrough = (element: HTMLDivElement): void => {
+    swipeableHandlers.ref(element);
+    foregroundRef.current = element;
   };
-
-  const onDragStart = (clientX: number): void => {
-    draggedRef.current = true;
-    dragStartXRef.current = clientX;
-
-    setForegroundTransform('');
-    setForegroundTransition('');
-
-    requestAnimationFrame(updatePosition);
-  };
-
-  const onMouseMove = (e: MouseEvent): void => {
-    const left = e.clientX - dragStartXRef.current;
-    if (left < 0) {
-      leftRef.current = left;
-    }
-  };
-
-  const onTouchMove = (e: TouchEvent): void => {
-    const touch = e.targetTouches[0];
-    const left = touch.clientX - dragStartXRef.current;
-    if (left < 0) {
-      leftRef.current = left;
-    }
-  };
-
-  const onDragStartMouse = (
-    e: GenericMouseEvent<HTMLDivElement, MouseEvent>,
-  ): void => {
-    onDragStart(e.clientX);
-    window.addEventListener('mousemove', onMouseMove);
-  };
-
-  const onDragStartTouch = (e: GenericTouchEvent<HTMLDivElement>): void => {
-    const touch = e.targetTouches[0];
-    onDragStart(touch.clientX);
-    window.addEventListener('touchmove', onTouchMove);
-  };
-
-  const onSwiped = (): void => {
-    if (onSwipe) {
-      onSwipe();
-    }
-  };
-
-  const onDragEnd = (): void => {
-    draggedRef.current = false;
-
-    if (!foregroundRef.current) {
-      return;
-    }
-
-    if (leftRef.current < foregroundRef.current.offsetWidth * -threshold) {
-      leftRef.current = -foregroundRef.current.offsetWidth * 2;
-
-      setMaxHeight('0');
-      onSwiped();
-    } else {
-      leftRef.current = 0;
-    }
-
-    setForegroundTransition(`transform 0.5s ease-out;`);
-    setForegroundTransform(`translateX(${leftRef.current}px)`);
-  };
-
-  const onDragEndMouse = (): void => {
-    window.removeEventListener('mousemove', onMouseMove);
-    onDragEnd();
-  };
-
-  const onDragEndTouch = (): void => {
-    window.removeEventListener('touchmove', onTouchMove);
-    onDragEnd();
-  };
-
-  useEffect(() => {
-    window.addEventListener('mouseup', onDragEndMouse);
-    window.addEventListener('touchend', onDragEndTouch);
-
-    return () => {
-      window.removeEventListener('mouseup', onDragEndMouse);
-      window.removeEventListener('touchend', onDragEndTouch);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
-    <Wrapper maxHeight={maxHeight}>
-      <BackgroundLayer opacity={opacity}>
-        <span>Delete</span>
+    <Wrapper>
+      <BackgroundLayer ref={backgroundRef}>
+        <FontAwesomeIcon
+          icon={faTrashAlt}
+          fixedWidth
+          style={{ marginRight: 'auto' }}
+        />
+        <FontAwesomeIcon icon={faTrashAlt} fixedWidth />
       </BackgroundLayer>
       <ForegroundLayer
-        ref={foregroundRef}
-        transform={transform}
-        transition={transition}
-        onMouseDown={onDragStartMouse}
-        onTouchStart={onDragStartTouch}
+        onMouseDown={swipeableHandlers.onMouseDown}
+        ref={refPassthrough}
       >
         {children}
       </ForegroundLayer>
