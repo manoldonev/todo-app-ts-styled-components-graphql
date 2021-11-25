@@ -8,6 +8,7 @@ import {
   useUpdateTodoMutation,
 } from '../../../generated';
 import { ImageButton } from '../../common/ImageButton';
+import { SwipeToDelete } from './SwipeToDelete';
 
 const ListItem = styled.li<{ done: boolean }>`
   background-color: #fff;
@@ -28,12 +29,17 @@ const ListItem = styled.li<{ done: boolean }>`
 
 const Wrapper = styled.div`
   display: flex;
+  flex: 1 1 auto;
   margin: 1rem 0;
   min-height: 2rem;
 `;
 
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   margin-right: 0.4rem;
+`;
+
+const Label = styled.label`
+  margin-right: auto;
 `;
 
 const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
@@ -57,15 +63,17 @@ const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
 
   return (
     <ListItem done={done}>
-      <Wrapper>
-        <label style={{ marginRight: 'auto' }} htmlFor={id}>
-          <Checkbox id={id} checked={done} onChange={handleChange} />
-          {task}
-        </label>
-        <ImageButton onClick={handleClick} aria-label="Delete Item">
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </ImageButton>
-      </Wrapper>
+      <SwipeToDelete>
+        <Wrapper>
+          <Label htmlFor={id}>
+            <Checkbox id={id} checked={done} onChange={handleChange} />
+            {task}
+          </Label>
+          <ImageButton onClick={handleClick} aria-label="Delete Item">
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </ImageButton>
+        </Wrapper>
+      </SwipeToDelete>
     </ListItem>
   );
 };
