@@ -39,6 +39,7 @@
     "react-hot-toast": "^2.1.1",
     "react-query": "^3.32.3",
     "react-scripts": "4.0.3",
+    "react-swipeable": "^6.2.0",
     "styled-components": "^5.3.3",
     "stylelint": "^14.1.0",
     "stylelint-config-recommended": "^6.0.0",
