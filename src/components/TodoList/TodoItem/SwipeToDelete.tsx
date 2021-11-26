@@ -67,6 +67,7 @@ const SwipeToDelete = ({
   const [swipeDirection, setSwipeDirection] = useState<SwipeDirections>(LEFT);
 
   const swipeableHandlers = useSwipeable({
+    // if tracking mouse see https://github.com/FormidableLabs/react-swipeable/issues/231 for a workaround
     trackMouse: false,
     preventDefaultTouchmoveEvent: true,
     onTap,
