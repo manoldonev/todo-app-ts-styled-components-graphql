@@ -8,9 +8,11 @@ import {
 import { SwipeToDelete } from './SwipeToDelete';
 
 const ListItem = styled.li<{ done: boolean }>`
+  display: flex;
   background-color: #fff;
   border: none;
   border-bottom: 0.1rem solid #ddd;
+  min-height: 5rem;
 
   &:last-child {
     border-bottom: none;
@@ -54,7 +56,7 @@ const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
     onSuccess: async () => queryClient.invalidateQueries('Todos'),
   });
 
-  const handleTap = (): void => {
+  const handleChange = (): void => {
     updateTodo({ id, input: { done: !done } });
   };
 
@@ -64,10 +66,10 @@ const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
 
   return (
     <ListItem done={done}>
-      <SwipeToDelete onSwiped={handleSwipe} onTap={handleTap}>
+      <SwipeToDelete onSwiped={handleSwipe} onTap={handleChange}>
         <Wrapper>
           <Label htmlFor={id}>
-            <Checkbox id={id} checked={done} />
+            <Checkbox id={id} checked={done} onChange={handleChange} />
             {task}
           </Label>
           {/* <ImageButton onClick={handleClick} aria-label="Delete Item">

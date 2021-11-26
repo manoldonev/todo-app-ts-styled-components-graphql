@@ -1,7 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components/macro';
-import type { SwipeCallback, TapCallback } from 'react-swipeable';
-import { LEFT, useSwipeable } from 'react-swipeable';
+import type {
+  SwipeCallback,
+  SwipeDirections,
+  TapCallback,
+} from 'react-swipeable';
+import { LEFT, RIGHT, useSwipeable } from 'react-swipeable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,17 +15,30 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const BackgroundLayer = styled.div`
+const BackgroundLayer = styled.div<{
+  swipeDirection: SwipeDirections;
+}>`
   position: absolute;
   z-index: 0;
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   padding: 0 1.5rem;
   color: white;
   background-color: #c70000;
+
+  ${(props) =>
+    props.swipeDirection === LEFT &&
+    `
+    justify-content: flex-end;
+  `}
+
+  ${(props) =>
+    props.swipeDirection === RIGHT &&
+    `
+    justify-content: flex-start;
+  `}
 `;
 
 const ForegroundLayer = styled.div`
@@ -47,9 +64,10 @@ const SwipeToDelete = ({
 }): JSX.Element | null => {
   const foregroundRef = useRef<HTMLDivElement | null>(null);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
+  const [swipeDirection, setSwipeDirection] = useState<SwipeDirections>(LEFT);
 
   const swipeableHandlers = useSwipeable({
-    trackMouse: true,
+    trackMouse: false,
     preventDefaultTouchmoveEvent: true,
     onTap,
     onSwipeStart: () => {
@@ -68,6 +86,8 @@ const SwipeToDelete = ({
         const opacity = Math.min(Math.abs(eventData.deltaX) / 100, 1);
         backgroundRef.current.style.opacity = opacity.toFixed(2);
       }
+
+      setSwipeDirection(eventData.dir);
     },
     onSwiped: (eventData) => {
       if (!foregroundRef.current) {
@@ -98,12 +118,7 @@ const SwipeToDelete = ({
 
   return (
     <Wrapper>
-      <BackgroundLayer ref={backgroundRef}>
-        <FontAwesomeIcon
-          icon={faTrashAlt}
-          fixedWidth
-          style={{ marginRight: 'auto' }}
-        />
+      <BackgroundLayer ref={backgroundRef} swipeDirection={swipeDirection}>
         <FontAwesomeIcon icon={faTrashAlt} fixedWidth />
       </BackgroundLayer>
       <ForegroundLayer
