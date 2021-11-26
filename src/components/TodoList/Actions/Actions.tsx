@@ -23,9 +23,13 @@ const ActionItem = styled.li`
 `;
 
 const ActionButton = styled(ImageButton)<{ active: boolean }>`
-  margin: 0 0.8rem 0 0;
+  margin: 0 0.3rem;
 
   ${(props) => props.active && `opacity: 1;`}
+`;
+
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  font-size: 2.7rem;
 `;
 
 const Actions = (): JSX.Element => {
@@ -48,7 +52,7 @@ const Actions = (): JSX.Element => {
           aria-label="Create Mode"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={faPlus} fixedWidth />
+          <StyledFontAwesomeIcon icon={faPlus} fixedWidth />
         </ActionButton>
       </ActionItem>
       <ActionItem>
@@ -58,7 +62,7 @@ const Actions = (): JSX.Element => {
           aria-label="Search Mode"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={faSearch} fixedWidth />
+          <StyledFontAwesomeIcon icon={faSearch} fixedWidth />
         </ActionButton>
       </ActionItem>
     </ActionList>

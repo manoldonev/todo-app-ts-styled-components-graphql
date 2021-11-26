@@ -6,7 +6,7 @@ import { Pagination } from '../Pagination';
 const StyledFooter = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   border-top: 0.1rem solid #ddd;
   background-color: #f4fce8;
   margin: 0 -2rem -1rem -2rem;

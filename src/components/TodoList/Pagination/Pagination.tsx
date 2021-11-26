@@ -12,6 +12,12 @@ import {
 import { useTodos } from '../useTodos';
 import { ImageButton } from '../../common/ImageButton';
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+`;
+
 const PaginationList = styled.ul`
   margin-right: auto;
   list-style-type: none;
@@ -22,13 +28,17 @@ const PaginationItem = styled.li`
   display: inline;
 `;
 
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  font-size: 2.7rem;
+`;
+
 const Pagination = (): JSX.Element => {
   const { currentPage: page } = useTodoState();
   const dispatch = useTodoDispatch();
   const { isPreviousData, hasMoreData } = useTodos();
 
   return (
-    <>
+    <Wrapper>
       Current page: {page}
       <PaginationList>
         <PaginationItem>
@@ -42,7 +52,7 @@ const Pagination = (): JSX.Element => {
             }
             disabled={page === 1}
           >
-            <FontAwesomeIcon icon={faChevronLeft} fixedWidth />
+            <StyledFontAwesomeIcon icon={faChevronLeft} fixedWidth />
           </ImageButton>
         </PaginationItem>
         <PaginationItem>
@@ -56,11 +66,11 @@ const Pagination = (): JSX.Element => {
             }
             disabled={isPreviousData || !hasMoreData}
           >
-            <FontAwesomeIcon icon={faChevronRight} fixedWidth />
+            <StyledFontAwesomeIcon icon={faChevronRight} fixedWidth />
           </ImageButton>
         </PaginationItem>
       </PaginationList>
-    </>
+    </Wrapper>
   );
 };
 

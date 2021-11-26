@@ -14,13 +14,14 @@ const FilterList = styled.ul`
 
 const FilterItem = styled.li`
   display: inline;
+  margin: 0.5rem;
 `;
 
 const Button = styled.button.attrs({ type: 'button' })<{ active: boolean }>`
+  font-size: 1.8rem;
   text-transform: capitalize;
   background-color: transparent;
   color: inherit;
-  margin: 0.3rem;
   padding: 0.3rem 0.7rem;
   text-decoration: none;
   border: 0.1rem solid transparent;

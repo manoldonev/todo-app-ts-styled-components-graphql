@@ -19,6 +19,7 @@ const Section = styled.section`
 const StyledList = styled.ul`
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 0;
 `;
 
 const TodoList = (): JSX.Element => {

@@ -10,10 +10,9 @@ const StyledInput = styled.input.attrs({
 })`
   display: block;
   width: 100%;
-  height: 3.4rem;
+  height: 4rem;
   padding: 0.6rem 1.2rem;
-  font-size: 1.4rem;
-  line-height: 1.42857143;
+  font-size: 1.6rem;
   color: #555;
   background-color: #fff;
   border: 1px solid #ccc;
