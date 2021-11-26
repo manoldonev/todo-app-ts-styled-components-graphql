@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/todo-app-ts-styled-components-graphql/static/css/main.ec83d2c2.chunk.css",
-    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.29d41e27.chunk.js",
-    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.29d41e27.chunk.js.map",
+    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.c1febe85.chunk.js",
+    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.c1febe85.chunk.js.map",
     "runtime-main.js": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.f9d740fd.js",
     "runtime-main.js.map": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.f9d740fd.js.map",
-    "static/js/2.03b94126.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/2.03b94126.chunk.js",
-    "static/js/2.03b94126.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/2.03b94126.chunk.js.map",
+    "static/js/2.c2f1d199.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/2.c2f1d199.chunk.js",
+    "static/js/2.c2f1d199.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/2.c2f1d199.chunk.js.map",
     "static/js/3.d3e70961.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/3.d3e70961.chunk.js",
     "static/js/3.d3e70961.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/3.d3e70961.chunk.js.map",
     "index.html": "/todo-app-ts-styled-components-graphql/index.html",
     "static/css/main.ec83d2c2.chunk.css.map": "/todo-app-ts-styled-components-graphql/static/css/main.ec83d2c2.chunk.css.map",
-    "static/js/2.03b94126.chunk.js.LICENSE.txt": "/todo-app-ts-styled-components-graphql/static/js/2.03b94126.chunk.js.LICENSE.txt"
+    "static/js/2.c2f1d199.chunk.js.LICENSE.txt": "/todo-app-ts-styled-components-graphql/static/js/2.c2f1d199.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f9d740fd.js",
-    "static/js/2.03b94126.chunk.js",
+    "static/js/2.c2f1d199.chunk.js",
     "static/css/main.ec83d2c2.chunk.css",
-    "static/js/main.29d41e27.chunk.js"
+    "static/js/main.c1febe85.chunk.js"
   ]
 }
