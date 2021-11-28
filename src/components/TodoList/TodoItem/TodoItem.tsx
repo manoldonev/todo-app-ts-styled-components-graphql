@@ -3,6 +3,7 @@ import { useQueryClient } from 'react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { useMediaQuery } from '@react-hook/media-query';
 import type { DataItem } from '../../../context/todo';
 import {
   useDeleteTodoMutation,
@@ -76,6 +77,7 @@ const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
   });
 
   const [overlayVisible, setOverlayVisible] = useState(false);
+  const isTouchEnabled = useMediaQuery('(pointer: coarse)');
 
   const toggleItem = (): void => {
     updateTodo({ id, input: { done: !done } });
@@ -88,8 +90,8 @@ const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
   return (
     <ListItem
       done={done}
-      onMouseEnter={() => setOverlayVisible(true)}
-      onMouseLeave={() => setOverlayVisible(false)}
+      onMouseEnter={() => !isTouchEnabled && setOverlayVisible(true)}
+      onMouseLeave={() => !isTouchEnabled && setOverlayVisible(false)}
     >
       <SwipeToDelete onSwiped={deleteItem} onTap={toggleItem}>
         <Wrapper>
