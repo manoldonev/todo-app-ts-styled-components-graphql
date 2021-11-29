@@ -4,13 +4,10 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionType,
-  useTodoDispatch,
-  useTodoState,
-} from '../../../context/todo';
 import { useTodos } from '../useTodos';
 import { ImageButton } from '../../common/ImageButton';
+import type { TodoState } from '../../../store';
+import { useStore } from '../../../store';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,9 +29,13 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 2.7rem;
 `;
 
+const selector = (state: TodoState): number => state.currentPage;
+const toggleSelector = (state: TodoState): ((newPage: number) => void) =>
+  state.togglePage;
+
 const Pagination = (): JSX.Element => {
-  const { currentPage: page } = useTodoState();
-  const dispatch = useTodoDispatch();
+  const page = useStore(selector);
+  const togglePage = useStore(toggleSelector);
   const { isPreviousData, hasMoreData } = useTodos();
 
   return (
@@ -44,12 +45,7 @@ const Pagination = (): JSX.Element => {
         <PaginationItem>
           <ImageButton
             aria-label="Previous Page"
-            onClick={() =>
-              dispatch({
-                type: ActionType.TogglePage,
-                numericPayload: Math.max(page - 1, 1),
-              })
-            }
+            onClick={() => togglePage(Math.max(page - 1, 1))}
             disabled={page === 1}
           >
             <StyledFontAwesomeIcon icon={faChevronLeft} fixedWidth />
@@ -58,12 +54,7 @@ const Pagination = (): JSX.Element => {
         <PaginationItem>
           <ImageButton
             aria-label="Next Page"
-            onClick={() =>
-              dispatch({
-                type: ActionType.TogglePage,
-                numericPayload: hasMoreData ? page + 1 : page,
-              })
-            }
+            onClick={() => togglePage(hasMoreData ? page + 1 : page)}
             disabled={isPreviousData || !hasMoreData}
           >
             <StyledFontAwesomeIcon icon={faChevronRight} fixedWidth />

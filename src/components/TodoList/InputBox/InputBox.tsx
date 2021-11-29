@@ -2,8 +2,9 @@ import type { KeyboardEvent } from 'react';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import styled from 'styled-components/macro';
-import { ActionType, useTodoDispatch } from '../../../context/todo';
 import { useCreateTodoMutation } from '../../../generated';
+import type { TodoState } from '../../../store';
+import { useStore } from '../../../store';
 
 const StyledInput = styled.input.attrs({
   type: 'text',
@@ -18,15 +19,18 @@ const StyledInput = styled.input.attrs({
   border: 1px solid #ccc;
 `;
 
+const selector = (state: TodoState): ((newPage: number) => void) =>
+  state.togglePage;
+
 const InputBox = (): JSX.Element => {
+  const togglePage = useStore(selector);
   const [value, setValue] = useState('');
-  const dispatch = useTodoDispatch();
   const queryClient = useQueryClient();
   const { mutate } = useCreateTodoMutation<Error>({
     onSuccess: async () => {
       queryClient.invalidateQueries('Todos');
       setValue('');
-      dispatch({ type: ActionType.TogglePage, numericPayload: 1 });
+      togglePage(1);
     },
   });
 

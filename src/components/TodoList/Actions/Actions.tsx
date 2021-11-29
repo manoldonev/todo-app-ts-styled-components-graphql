@@ -1,14 +1,9 @@
 import styled from 'styled-components/macro';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { MouseEvent } from 'react';
 import { ImageButton } from '../../common/ImageButton';
-import {
-  ActionType,
-  InputMode,
-  useTodoDispatch,
-  useTodoState,
-} from '../../../context/todo';
+import type { TodoState } from '../../../store';
+import { InputMode, useStore } from '../../../store';
 
 const ActionList = styled.ul`
   flex: 0 0 auto;
@@ -32,16 +27,14 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 2.7rem;
 `;
 
-const Actions = (): JSX.Element => {
-  const { inputMode: mode } = useTodoState();
-  const dispatch = useTodoDispatch();
+const inputModeSelector = (state: TodoState): InputMode => state.inputMode;
+const toggleInputModeSelector = (
+  state: TodoState,
+): ((inputMode: InputMode) => void) => state.toggleInputMode;
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
-    dispatch({
-      type: ActionType.ToggleMode,
-      numericPayload: parseInt(e.currentTarget.value, 10),
-    });
-  };
+const Actions = (): JSX.Element => {
+  const mode = useStore(inputModeSelector);
+  const toggleInputMode = useStore(toggleInputModeSelector);
 
   return (
     <ActionList>
@@ -50,7 +43,7 @@ const Actions = (): JSX.Element => {
           active={mode === InputMode.Add}
           value={InputMode.Add}
           aria-label="Create Mode"
-          onClick={handleClick}
+          onClick={() => toggleInputMode(InputMode.Add)}
         >
           <StyledFontAwesomeIcon icon={faPlus} fixedWidth />
         </ActionButton>
@@ -60,7 +53,7 @@ const Actions = (): JSX.Element => {
           active={mode === InputMode.Search}
           value={InputMode.Search}
           aria-label="Search Mode"
-          onClick={handleClick}
+          onClick={() => toggleInputMode(InputMode.Search)}
         >
           <StyledFontAwesomeIcon icon={faSearch} fixedWidth />
         </ActionButton>

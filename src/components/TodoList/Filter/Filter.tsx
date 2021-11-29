@@ -1,10 +1,6 @@
 import styled from 'styled-components/macro';
-import {
-  ActionType,
-  FilterMode,
-  useTodoDispatch,
-  useTodoState,
-} from '../../../context/todo';
+import type { TodoState } from '../../../store';
+import { FilterMode, useStore } from '../../../store';
 
 const FilterList = styled.ul`
   flex: 0 0 auto;
@@ -38,19 +34,22 @@ const Button = styled.button.attrs({ type: 'button' })<{ active: boolean }>`
   `}
 `;
 
-const Filter = (): JSX.Element => {
-  const { filterMode: mode } = useTodoState();
-  const dispatch = useTodoDispatch();
+const selector = (state: TodoState): FilterMode => state.filterMode;
+const toggleSelector = (state: TodoState): ((filterMode: FilterMode) => void) =>
+  state.toggleFilterMode;
 
-  function toggleFilter(key: string): void {
-    dispatch({ type: ActionType.ToggleFilter, stringPayload: key });
-  }
+const Filter = (): JSX.Element => {
+  const mode = useStore(selector);
+  const toggleFilterMode = useStore(toggleSelector);
 
   return (
     <FilterList>
       {Object.entries(FilterMode).map(([key, value]) => (
         <FilterItem key={key}>
-          <Button active={value === mode} onClick={() => toggleFilter(key)}>
+          <Button
+            active={value === mode}
+            onClick={() => toggleFilterMode(value)}
+          >
             {value}
           </Button>
         </FilterItem>
