@@ -1,11 +1,17 @@
-import { FilterMode, useTodoState } from '../../context/todo';
 import type { TodosQuery } from '../../generated';
 import { useTodosQuery } from '../../generated';
+import type { TodoState } from '../../store';
+import { useStore, FilterMode } from '../../store';
 
 const enum SortDirection {
   Ascending = 'asc',
   Descending = 'desc',
 }
+
+const pageSize = 5;
+
+const pageSelector = (state: TodoState): number => state.currentPage;
+const filterModeSelector = (state: TodoState): FilterMode => state.filterMode;
 
 const useTodos = (): {
   data: TodosQuery | undefined;
@@ -13,7 +19,8 @@ const useTodos = (): {
   isPreviousData: boolean;
   hasMoreData: boolean;
 } => {
-  const { currentPage, pageSize, filterMode } = useTodoState();
+  const currentPage = useStore(pageSelector);
+  const filterMode = useStore(filterModeSelector);
   let input = null;
   if (filterMode === FilterMode.Active) {
     input = { done_eq: false };

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useMediaQuery } from '@react-hook/media-query';
-import type { DataItem } from '../../../context/todo';
 import {
   useDeleteTodoMutation,
   useUpdateTodoMutation,
@@ -54,6 +53,7 @@ const OverlayWrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -65,7 +65,15 @@ const DeleteButton = styled(ImageButton)`
   height: 100%;
 `;
 
-const TodoItem = ({ data }: { data: DataItem }): JSX.Element => {
+const TodoItem = ({
+  data,
+}: {
+  data: {
+    id: string;
+    task: string;
+    done: boolean;
+  };
+}): JSX.Element => {
   const { id, task, done } = data;
   const queryClient = useQueryClient();
   const { mutate: updateTodo } = useUpdateTodoMutation({

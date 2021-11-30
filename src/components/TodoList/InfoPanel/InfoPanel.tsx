@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
-import { InputMode, useTodoState } from '../../../context/todo';
+import type { TodoState } from '../../../store';
+import { InputMode, useStore } from '../../../store';
 
 const Paragraph = styled.p`
   position: absolute;
@@ -15,8 +16,10 @@ const INFO_SHORTCUT_KEYS =
   'Press `Shift + S` to search and `Shift + A` to create a new item.';
 const INFO_CANCEL_SHORTCUT_KEY = 'Press `Esc` to cancel.';
 
+const selector = (state: TodoState): InputMode => state.inputMode;
+
 const InfoPanel = (): JSX.Element => {
-  const { inputMode: mode } = useTodoState();
+  const mode = useStore(selector);
   const message =
     mode === InputMode.None ? INFO_SHORTCUT_KEYS : INFO_CANCEL_SHORTCUT_KEY;
 

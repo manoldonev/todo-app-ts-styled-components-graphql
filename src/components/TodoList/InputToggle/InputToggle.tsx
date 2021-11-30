@@ -1,9 +1,12 @@
-import { InputMode, useTodoState } from '../../../context/todo';
+import type { TodoState } from '../../../store';
+import { InputMode, useStore } from '../../../store';
 import { InputBox } from '../InputBox';
 import { SearchBox } from '../SearchBox';
 
+const selector = (state: TodoState): InputMode => state.inputMode;
+
 const InputToggle = (): JSX.Element | null => {
-  const { inputMode: mode } = useTodoState();
+  const mode = useStore(selector);
 
   switch (mode) {
     case InputMode.Add: {
