@@ -47,6 +47,7 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   flex: 1 1 100%;
+  padding: 0.8rem 0;
 `;
 
 const OverlayWrapper = styled.div`
