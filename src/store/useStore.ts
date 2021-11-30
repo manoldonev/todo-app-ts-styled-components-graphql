@@ -1,3 +1,4 @@
+import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import create from 'zustand';
 
 enum FilterMode {
@@ -13,7 +14,7 @@ enum InputMode {
 }
 
 interface TodoState {
-  currentPage: number;
+  page: number;
   togglePage: (newPage: number) => void;
   filterMode: FilterMode;
   toggleFilterMode: (filterMode: FilterMode) => void;
@@ -25,31 +26,33 @@ interface TodoState {
 
 const defaultPage = 1;
 
-const useStore = create<TodoState>((set) => ({
-  currentPage: defaultPage,
-  togglePage: (page) => {
-    set(() => ({ currentPage: page }));
-  },
+const useStore = createSelectorHooks(
+  create<TodoState>((set) => ({
+    page: defaultPage,
+    togglePage: (page) => {
+      set(() => ({ page }));
+    },
 
-  filterMode: FilterMode.All,
-  toggleFilterMode: (filterMode) => {
-    set(() => ({ filterMode, currentPage: defaultPage }));
-  },
+    filterMode: FilterMode.All,
+    toggleFilterMode: (filterMode) => {
+      set(() => ({ filterMode, page: defaultPage }));
+    },
 
-  inputMode: InputMode.Add,
-  toggleInputMode: (inputMode) => {
-    set(() => ({
-      inputMode,
-      filterMode: FilterMode.All,
-      currentPage: defaultPage,
-    }));
-  },
+    inputMode: InputMode.Add,
+    toggleInputMode: (inputMode) => {
+      set(() => ({
+        inputMode,
+        filterMode: FilterMode.All,
+        page: defaultPage,
+      }));
+    },
 
-  query: '',
-  updateQuery: (query) => {
-    set(() => ({ query }));
-  },
-}));
+    query: '',
+    updateQuery: (query) => {
+      set(() => ({ query }));
+    },
+  })),
+);
 
 export { useStore, InputMode, FilterMode };
 export type { TodoState };

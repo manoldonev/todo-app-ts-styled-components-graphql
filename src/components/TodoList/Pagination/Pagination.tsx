@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useTodos } from '../useTodos';
 import { ImageButton } from '../../common/ImageButton';
-import type { TodoState } from '../../../store';
 import { useStore } from '../../../store';
 
 const Wrapper = styled.div`
@@ -29,13 +28,9 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 2.7rem;
 `;
 
-const selector = (state: TodoState): number => state.currentPage;
-const toggleSelector = (state: TodoState): ((newPage: number) => void) =>
-  state.togglePage;
-
 const Pagination = (): JSX.Element => {
-  const page = useStore(selector);
-  const togglePage = useStore(toggleSelector);
+  const page = useStore.usePage();
+  const togglePage = useStore.useTogglePage();
   const { isPreviousData, hasMoreData } = useTodos();
 
   return (

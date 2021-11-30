@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import styled from 'styled-components/macro';
 import { useCreateTodoMutation } from '../../../generated';
-import type { TodoState } from '../../../store';
 import { useStore } from '../../../store';
 
 const StyledInput = styled.input.attrs({
@@ -19,11 +18,8 @@ const StyledInput = styled.input.attrs({
   border: 1px solid #ccc;
 `;
 
-const selector = (state: TodoState): ((newPage: number) => void) =>
-  state.togglePage;
-
 const InputBox = (): JSX.Element => {
-  const togglePage = useStore(selector);
+  const togglePage = useStore.useTogglePage();
   const [value, setValue] = useState('');
   const queryClient = useQueryClient();
   const { mutate } = useCreateTodoMutation<Error>({
