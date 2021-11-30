@@ -17,11 +17,17 @@ const useTodos = (): {
 } => {
   const currentPage = useStore.usePage();
   const filterMode = useStore.useFilterMode();
+  const query = useStore.useQuery();
   let input = null;
   if (filterMode === FilterMode.Active) {
     input = { done_eq: false };
   } else if (filterMode === FilterMode.Done) {
     input = { done_eq: true };
+  }
+
+  if (query !== '') {
+    // TODO: case-insensitive search after switching to https://hasura.io/
+    input = { ...input, task_contains: query };
   }
 
   const queryVariables = {
