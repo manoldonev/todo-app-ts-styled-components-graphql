@@ -2,7 +2,6 @@ import styled from 'styled-components/macro';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ImageButton } from '../../common/ImageButton';
-import type { TodoState } from '../../../store';
 import { InputMode, useStore } from '../../../store';
 
 const ActionList = styled.ul`
@@ -27,14 +26,9 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 2.7rem;
 `;
 
-const inputModeSelector = (state: TodoState): InputMode => state.inputMode;
-const toggleInputModeSelector = (
-  state: TodoState,
-): ((inputMode: InputMode) => void) => state.toggleInputMode;
-
 const Actions = (): JSX.Element => {
-  const mode = useStore(inputModeSelector);
-  const toggleInputMode = useStore(toggleInputModeSelector);
+  const mode = useStore.useInputMode();
+  const toggleInputMode = useStore.useToggleInputMode();
 
   return (
     <ActionList>

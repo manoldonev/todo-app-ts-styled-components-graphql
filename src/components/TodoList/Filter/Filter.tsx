@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import type { TodoState } from '../../../store';
 import { FilterMode, useStore } from '../../../store';
 
 const FilterList = styled.ul`
@@ -34,13 +33,9 @@ const Button = styled.button.attrs({ type: 'button' })<{ active: boolean }>`
   `}
 `;
 
-const selector = (state: TodoState): FilterMode => state.filterMode;
-const toggleSelector = (state: TodoState): ((filterMode: FilterMode) => void) =>
-  state.toggleFilterMode;
-
 const Filter = (): JSX.Element => {
-  const mode = useStore(selector);
-  const toggleFilterMode = useStore(toggleSelector);
+  const mode = useStore.useFilterMode();
+  const toggleFilterMode = useStore.useToggleFilterMode();
 
   return (
     <FilterList>
