@@ -1,5 +1,7 @@
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import create from 'zustand';
+import { persist } from 'zustand/middleware';
+import { immer } from './middleware';
 
 enum FilterMode {
   All = 'all',
@@ -27,31 +29,38 @@ interface TodoState {
 const defaultPage = 1;
 
 const useStore = createSelectorHooks(
-  create<TodoState>((set) => ({
-    page: defaultPage,
-    togglePage: (page) => {
-      set(() => ({ page }));
-    },
-
-    filterMode: FilterMode.All,
-    toggleFilterMode: (filterMode) => {
-      set(() => ({ filterMode, page: defaultPage }));
-    },
-
-    inputMode: InputMode.Add,
-    toggleInputMode: (inputMode) => {
-      set(() => ({
-        inputMode,
-        filterMode: FilterMode.All,
+  create<TodoState>(
+    persist(
+      immer((set) => ({
         page: defaultPage,
-      }));
-    },
+        togglePage: (page) => {
+          set(() => ({ page }));
+        },
 
-    query: '',
-    updateQuery: (query) => {
-      set(() => ({ query }));
-    },
-  })),
+        filterMode: FilterMode.All,
+        toggleFilterMode: (filterMode) => {
+          set(() => ({ filterMode, page: defaultPage }));
+        },
+
+        inputMode: InputMode.Add,
+        toggleInputMode: (inputMode) => {
+          set(() => ({
+            inputMode,
+            filterMode: FilterMode.All,
+            page: defaultPage,
+          }));
+        },
+
+        query: '',
+        updateQuery: (query) => {
+          set(() => ({ query }));
+        },
+      })),
+      {
+        name: 'todo-storage',
+      },
+    ),
+  ),
 );
 
 export { useStore, InputMode, FilterMode };
