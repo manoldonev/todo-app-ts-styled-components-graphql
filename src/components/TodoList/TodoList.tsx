@@ -5,7 +5,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { InputToggle } from './InputToggle';
 import { InfoPanel } from './InfoPanel';
-import { useTodoKeyboardShortcuts } from './useTodoKeyboardShortcuts';
+import { useTodoHotkeys } from './useTodoHotkeys';
 
 const Section = styled.section`
   position: relative;
@@ -26,7 +26,7 @@ const StyledList = styled.ul`
 const TodoList = (): JSX.Element => {
   const { data } = useTodos();
 
-  useTodoKeyboardShortcuts();
+  useTodoHotkeys();
 
   return (
     <Section>

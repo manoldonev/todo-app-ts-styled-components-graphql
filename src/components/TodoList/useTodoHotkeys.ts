@@ -1,10 +1,10 @@
-import { useHotkeys } from '../../hooks/useKeyboardShortcut';
+import { useHotkeys } from '../../hooks';
 import { InputMode, useStore } from '../../store';
 
 const shiftKey = 'shift';
 const escapeKey = 'escape';
 
-const useTodoKeyboardShortcuts = (): void => {
+const useTodoHotkeys = (): void => {
   const toggleInputMode = useStore.useToggleInputMode();
   const createModeKeys = [shiftKey, 'a'];
   const searchModeKeys = [shiftKey, 's'];
@@ -15,4 +15,4 @@ const useTodoKeyboardShortcuts = (): void => {
   useHotkeys(noInputModeKeys, () => toggleInputMode(InputMode.None));
 };
 
-export { useTodoKeyboardShortcuts };
+export { useTodoHotkeys };
