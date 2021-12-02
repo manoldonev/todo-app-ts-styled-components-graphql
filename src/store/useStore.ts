@@ -1,5 +1,10 @@
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
+import type { StateCreator } from 'zustand';
+import { pipe } from 'remeda';
 import create from 'zustand';
+import { persist } from 'zustand/middleware';
+import type { Draft } from 'immer';
+import { withImmer } from './middleware';
 
 enum FilterMode {
   All = 'all',
@@ -26,32 +31,41 @@ interface TodoState {
 
 const defaultPage = 1;
 
-const useStore = createSelectorHooks(
-  create<TodoState>((set) => ({
-    page: defaultPage,
-    togglePage: (page) => {
-      set(() => ({ page }));
-    },
+const config: StateCreator<
+  TodoState,
+  (fn: (draft: Draft<TodoState>) => void) => void
+> = (set) => ({
+  page: defaultPage,
+  togglePage: (page) => {
+    set(() => ({ page }));
+  },
 
-    filterMode: FilterMode.All,
-    toggleFilterMode: (filterMode) => {
-      set(() => ({ filterMode, page: defaultPage }));
-    },
+  filterMode: FilterMode.All,
+  toggleFilterMode: (filterMode) => {
+    set(() => ({ filterMode, page: defaultPage }));
+  },
 
-    inputMode: InputMode.Add,
-    toggleInputMode: (inputMode) => {
-      set(() => ({
-        inputMode,
-        filterMode: FilterMode.All,
-        page: defaultPage,
-      }));
-    },
+  inputMode: InputMode.Add,
+  toggleInputMode: (inputMode) => {
+    set(() => ({
+      inputMode,
+      filterMode: FilterMode.All,
+      page: defaultPage,
+    }));
+  },
 
-    query: '',
-    updateQuery: (query) => {
-      set(() => ({ query }));
-    },
-  })),
+  query: '',
+  updateQuery: (query) => {
+    set(() => ({ query }));
+  },
+});
+
+const useStore = pipe(
+  config,
+  withImmer,
+  (result) => persist(result, { name: 'todo-storage' }),
+  (result) => create<TodoState>(result),
+  createSelectorHooks,
 );
 
 export { useStore, InputMode, FilterMode };
