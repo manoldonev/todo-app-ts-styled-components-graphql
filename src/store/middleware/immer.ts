@@ -1,38 +1,12 @@
-import type {
-  GetState,
-  SetState,
-  State,
-  StateCreator,
-  StoreApi,
-} from 'zustand';
+import type { State, StateCreator } from 'zustand';
 import type { Draft } from 'immer';
 import produce from 'immer';
 
-const immer =
-  <
-    T extends State,
-    CustomSetState extends SetState<T>,
-    CustomGetState extends GetState<T>,
-    CustomStoreApi extends StoreApi<T>,
-  >(
-    config: StateCreator<
-      T,
-      (partial: ((draft: Draft<T>) => void) | T, replace?: boolean) => void,
-      CustomGetState,
-      CustomStoreApi
-    >,
-  ): StateCreator<T, CustomSetState, CustomGetState, CustomStoreApi> =>
+const withImmer =
+  <T extends State>(
+    config: StateCreator<T, (fn: (draft: Draft<T>) => void) => void>,
+  ): StateCreator<T> =>
   (set, get, api) =>
-    config(
-      (partial, replace) => {
-        const nextState =
-          typeof partial === 'function'
-            ? produce(partial as (state: Draft<T>) => T)
-            : (partial as T);
-        return set(nextState, replace);
-      },
-      get,
-      api,
-    );
+    config((fn) => set(produce<T>(fn)), get, api);
 
-export { immer };
+export { withImmer };

@@ -1,1 +1,1 @@
-export { immer } from './immer';
+export { withImmer } from './immer';
