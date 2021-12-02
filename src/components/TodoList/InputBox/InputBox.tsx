@@ -1,5 +1,4 @@
 import type { KeyboardEvent } from 'react';
-import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import styled from 'styled-components/macro';
 import { useCreateTodoMutation } from '../../../generated';
@@ -19,13 +18,14 @@ const StyledInput = styled.input.attrs({
 `;
 
 const InputBox = (): JSX.Element => {
+  const query = useStore.useQuery();
+  const updateQuery = useStore.useUpdateQuery();
   const togglePage = useStore.useTogglePage();
-  const [value, setValue] = useState('');
   const queryClient = useQueryClient();
   const { mutate } = useCreateTodoMutation<Error>({
     onSuccess: async () => {
       queryClient.invalidateQueries('Todos');
-      setValue('');
+      updateQuery('');
       togglePage(1);
     },
   });
@@ -33,15 +33,18 @@ const InputBox = (): JSX.Element => {
   const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.code === 'Enter') {
       // TODO: implement user management
-      mutate({ input: { task: value.trim(), done: false, user_id: '1' } });
+      const taskToAdd = query.trim();
+      if (taskToAdd !== '') {
+        mutate({ input: { task: taskToAdd, done: false, user_id: '1' } });
+      }
     }
   };
 
   return (
     <StyledInput
       placeholder="Add New"
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
+      value={query}
+      onChange={(e) => updateQuery(e.target.value)}
       onKeyUp={handleKeyUp}
     />
   );

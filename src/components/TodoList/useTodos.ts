@@ -1,6 +1,6 @@
 import type { TodosQuery } from '../../generated';
 import { useTodosQuery } from '../../generated';
-import { useStore, FilterMode } from '../../store';
+import { useStore, FilterMode, InputMode } from '../../store';
 
 const enum SortDirection {
   Ascending = 'asc',
@@ -17,6 +17,7 @@ const useTodos = (): {
 } => {
   const currentPage = useStore.usePage();
   const filterMode = useStore.useFilterMode();
+  const inputMode = useStore.useInputMode();
   const query = useStore.useQuery();
   let input = null;
   if (filterMode === FilterMode.Active) {
@@ -25,7 +26,7 @@ const useTodos = (): {
     input = { done_eq: true };
   }
 
-  if (query !== '') {
+  if (query !== '' && inputMode === InputMode.Search) {
     // TODO: case-insensitive search after switching to https://hasura.io/
     input = { ...input, task_contains: query };
   }
