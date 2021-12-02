@@ -3,7 +3,6 @@ import { useQueryClient } from 'react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from '@react-hook/media-query';
-import { useState } from 'react';
 import {
   useDeleteTodoMutation,
   useUpdateTodoMutation,
@@ -50,15 +49,8 @@ const Label = styled.label`
   padding: 0.8rem 0;
 `;
 
-const OverlayWrapper = styled.div`
-  position: absolute;
-  right: 0;
-  height: 100%;
-  padding: 0 1rem;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+const DeleteButton = styled(ImageButton)`
+  padding: 0 1.5rem;
 `;
 
 const TodoItem = ({
@@ -80,7 +72,6 @@ const TodoItem = ({
     onSuccess: async () => queryClient.invalidateQueries('Todos'),
   });
 
-  const [overlayVisible, setOverlayVisible] = useState(false);
   const isTouchEnabled = useMediaQuery('(pointer: coarse)');
 
   const toggleItem = (): void => {
@@ -102,19 +93,11 @@ const TodoItem = ({
 
   if (!isTouchEnabled) {
     return (
-      <ListItem
-        done={done}
-        onMouseEnter={() => setOverlayVisible(true)}
-        onMouseLeave={() => setOverlayVisible(false)}
-      >
+      <ListItem done={done}>
         {content}
-        {overlayVisible && (
-          <OverlayWrapper>
-            <ImageButton onClick={deleteItem} aria-label="Delete Item">
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </ImageButton>
-          </OverlayWrapper>
-        )}
+        <DeleteButton onClick={deleteItem} aria-label="Delete Item">
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </DeleteButton>
       </ListItem>
     );
   }
