@@ -63,7 +63,8 @@ const config: StateCreator<
 const useStore = pipe(
   config,
   withImmer,
-  (result) => persist(result, { name: 'todo-storage' }),
+  (result) =>
+    persist(result, { name: 'todo-storage', getStorage: () => sessionStorage }),
   (result) => create<TodoState>(result),
   createSelectorHooks,
 );
