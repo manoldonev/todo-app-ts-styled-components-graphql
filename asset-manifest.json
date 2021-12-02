@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/todo-app-ts-styled-components-graphql/static/css/main.ec83d2c2.chunk.css",
-    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.67b3be1c.chunk.js",
-    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.67b3be1c.chunk.js.map",
-    "runtime-main.js": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.d884f95c.js",
-    "runtime-main.js.map": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.d884f95c.js.map",
-    "static/js/2.c4077fb3.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/2.c4077fb3.chunk.js",
-    "static/js/2.c4077fb3.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/2.c4077fb3.chunk.js.map",
-    "static/js/3.b02ed287.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/3.b02ed287.chunk.js",
-    "static/js/3.b02ed287.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/3.b02ed287.chunk.js.map",
+    "main.js": "/todo-app-ts-styled-components-graphql/static/js/main.c5f1b7a3.chunk.js",
+    "main.js.map": "/todo-app-ts-styled-components-graphql/static/js/main.c5f1b7a3.chunk.js.map",
+    "runtime-main.js": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.3dbbba11.js",
+    "runtime-main.js.map": "/todo-app-ts-styled-components-graphql/static/js/runtime-main.3dbbba11.js.map",
+    "static/js/2.645b98f1.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/2.645b98f1.chunk.js",
+    "static/js/2.645b98f1.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/2.645b98f1.chunk.js.map",
+    "static/js/3.d042d21a.chunk.js": "/todo-app-ts-styled-components-graphql/static/js/3.d042d21a.chunk.js",
+    "static/js/3.d042d21a.chunk.js.map": "/todo-app-ts-styled-components-graphql/static/js/3.d042d21a.chunk.js.map",
     "index.html": "/todo-app-ts-styled-components-graphql/index.html",
     "static/css/main.ec83d2c2.chunk.css.map": "/todo-app-ts-styled-components-graphql/static/css/main.ec83d2c2.chunk.css.map",
-    "static/js/2.c4077fb3.chunk.js.LICENSE.txt": "/todo-app-ts-styled-components-graphql/static/js/2.c4077fb3.chunk.js.LICENSE.txt"
+    "static/js/2.645b98f1.chunk.js.LICENSE.txt": "/todo-app-ts-styled-components-graphql/static/js/2.645b98f1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d884f95c.js",
-    "static/js/2.c4077fb3.chunk.js",
+    "static/js/runtime-main.3dbbba11.js",
+    "static/js/2.645b98f1.chunk.js",
     "static/css/main.ec83d2c2.chunk.css",
-    "static/js/main.67b3be1c.chunk.js"
+    "static/js/main.c5f1b7a3.chunk.js"
   ]
 }
